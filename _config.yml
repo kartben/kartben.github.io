@@ -17,7 +17,7 @@ defaults:
       layout: "post"
 
 projects:
-  sort_by: pushed
+  sort_by: stars
   # sort_by options:
   #   - pushed
   #   - stars
@@ -26,7 +26,10 @@ projects:
     archived: false
     forks: true
     projects:
-    # - repo-name
+     - kartben.github.io
+     - guirlande
+     - mqtt-tutorial-eclipsecon2014
+     - eclipsecon-m2m-contest
 
 social_media:
   # behance: your_username
@@ -35,7 +38,7 @@ social_media:
   # hackerrank: your_username
   # instagram: your_username
   keybase: kartben
-  linkedin: benjamin-cabe
+  linkedin: benjamincabe
   # mastodon: your_username
   # medium: your_username
   stackoverflow: 1051634
@@ -43,7 +46,7 @@ social_media:
   twitter: kartben
   # unsplash: your_username
   # vk: your_username
-  website: bhttps://blog.benjamin-cabe.com
+  website: https://blog.benjamin-cabe.com
   youtube: kartben
   
 topics:
