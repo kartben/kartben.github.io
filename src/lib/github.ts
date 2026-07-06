@@ -101,9 +101,9 @@ export async function getFeaturedRepositories(): Promise<GitHubRepository[]> {
       }),
     );
 
-    return repositories;
+    return repositories.sort((a, b) => b.stargazers_count - a.stargazers_count);
   } catch (error) {
     console.warn('Falling back to bundled repository metadata:', error);
-    return fallbackRepositories;
+    return [...fallbackRepositories].sort((a, b) => b.stargazers_count - a.stargazers_count);
   }
 }
