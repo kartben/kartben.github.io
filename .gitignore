@@ -1,6 +1,12 @@
-*.gem
-.bundle
-.sass-cache
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Legacy Jekyll output while the migration PR is under review
 _site/
+.bundle/
+.sass-cache/
 Gemfile.lock
+*.gem
 **/.ruby-version
