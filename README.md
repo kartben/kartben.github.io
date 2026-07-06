@@ -20,3 +20,4 @@ Featured project metadata is refreshed from the GitHub API during the build. Set
 ## Deployment
 
 The workflow in `.github/workflows/deploy.yml` builds the static site and deploys it to GitHub Pages. The repository's Pages source must be set to **GitHub Actions**.
+
