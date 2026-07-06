@@ -1,0 +1,146 @@
+---
+import { profile } from '../data/profile';
+import { getFeaturedRepositories } from '../lib/github';
+import '../styles/global.css';
+
+const repositories = await getFeaturedRepositories();
+const year = new Date().getFullYear();
+const formatCount = (value: number) =>
+  new Intl.NumberFormat('en', { notation: value >= 1000 ? 'compact' : 'standard' }).format(value);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Benjamin Cabé — developer advocate, open-source builder, Zephyr RTOS contributor, and SPDX/SBOM tooling enthusiast."
+    />
+    <meta name="theme-color" content="#f3f0e8" />
+    <link rel="canonical" href={Astro.site} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+    <title>{profile.name} — Open source, embedded systems, developer advocacy</title>
+  </head>
+  <body>
+    <header class="site-header wrap">
+      <a class="brand" href="/" aria-label={`${profile.name}, home`}>
+        <span class="brand-mark">BC</span>
+        <span>{profile.name}</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href={`mailto:${profile.email}`}>Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="kicker">{profile.location} · Open source all the way down</p>
+          <h1 id="hero-title">
+            Making complex technology
+            <em>click.</em>
+          </h1>
+          <p class="lede">{profile.intro}</p>
+          <div class="hero-actions" aria-label="Profile links">
+            {profile.socialLinks.map((link, index) => (
+              <a class={index === 0 ? 'button primary' : 'button'} href={link.href} rel="me">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="portrait-wrap" aria-hidden="true">
+          <div class="portrait-halo"></div>
+          <img class="portrait" src={profile.avatarUrl} alt="" width="360" height="360" />
+          <p class="portrait-note">Developer advocate<br />Open-source builder<br />Curious human</p>
+        </div>
+      </section>
+
+      <section class="marquee" aria-label="Areas of interest">
+        <div class="marquee-track">
+          <span>Zephyr RTOS</span><i>✦</i><span>SPDX 3</span><i>✦</i><span>Embedded systems</span><i>✦</i>
+          <span>Developer tooling</span><i>✦</i><span>Open source</span><i>✦</i><span>Storytelling</span>
+        </div>
+      </section>
+
+      <section id="work" class="section wrap" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p class="section-number">01</p>
+          <div>
+            <p class="kicker">Currently</p>
+            <h2 id="work-title">Where I spend my energy</h2>
+          </div>
+        </div>
+
+        <div class="focus-grid">
+          {profile.focusAreas.map((area) => (
+            <a class="focus-card" href={area.href}>
+              <p class="eyebrow">{area.eyebrow}</p>
+              <h3>{area.title}</h3>
+              <p>{area.description}</p>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="projects" class="section projects-section" aria-labelledby="projects-title">
+        <div class="wrap">
+          <div class="section-heading">
+            <p class="section-number">02</p>
+            <div>
+              <p class="kicker">Selected projects</p>
+              <h2 id="projects-title">Things I build to learn — and share</h2>
+            </div>
+          </div>
+
+          <div class="projects-grid">
+            {repositories.map((repository, index) => (
+              <article class="project-card">
+                <div class="project-index">{String(index + 1).padStart(2, '0')}</div>
+                <div class="project-body">
+                  <h3>
+                    <a href={repository.homepage || repository.html_url}>{repository.name}</a>
+                  </h3>
+                  <p>{repository.description || 'An open-source project on GitHub.'}</p>
+                </div>
+                <div class="project-meta">
+                  {repository.language && <span>{repository.language}</span>}
+                  {repository.stargazers_count > 0 && (
+                    <span aria-label={`${repository.stargazers_count} GitHub stars`}>
+                      ★ {formatCount(repository.stargazers_count)}
+                    </span>
+                  )}
+                  <a href={repository.html_url} aria-label={`Open ${repository.name} on GitHub`}>GitHub ↗</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section wrap connect" aria-labelledby="connect-title">
+        <div>
+          <p class="kicker">Say hello</p>
+          <h2 id="connect-title">Good ideas get better when shared.</h2>
+        </div>
+        <div class="connect-copy">
+          <p>
+            I speak, write, prototype, document, and occasionally spend far too long turning an obscure technical detail into a demo.
+          </p>
+          <a class="text-link" href={`mailto:${profile.email}`}>Get in touch ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>© {year} {profile.name}</p>
+      <p>Built with Astro. Data refreshed from GitHub at build time.</p>
+    </footer>
+  </body>
+</html>
